@@ -22,12 +22,28 @@ let newsData = [
 
 // Start App
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      news: newsData
+    };
+  }
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
   render() {
     return (
       <div className="app">
         <h3 className="title-head">Новости</h3>
         <Add />
-        <News data={newsData}/>
+        <News data={this.state.news}/>
       </div>
     );
   }
@@ -118,8 +134,6 @@ class Add extends React.Component {
 
     this.onBtnClick = this.onBtnClick.bind(this);
     this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
-    this.onAuthorChange  = this.onAuthorChange.bind(this);
-    this.onTextChange = this.onTextChange.bind(this);
   }
 
   componentWillMount() {
@@ -159,20 +173,15 @@ class Add extends React.Component {
     })
   }
 
-  onAuthorChange(ev) {
+  onInputValid(fieldName, ev) {
+    let state = {};
     if (ev.target.value.trim().length > 0) {
-      this.setState({authorIsEmpty: false})
+      state[fieldName] = false;
     } else {
-      this.setState({authorIsEmpty: true})
+      state[fieldName] = true;
     }
-  }
+    this.setState(state);
 
-  onTextChange(ev) {
-    if (ev.target.value.trim().length > 0) {
-      this.setState({textIsEmpty: false})
-    } else {
-      this.setState({textIsEmpty: true})
-    }
   }
 
   render() {
@@ -180,15 +189,25 @@ class Add extends React.Component {
     return (
       <form name="add_news" className="add_news">
         <label>Author
-          <input className="test-input" type="text" placeholder='Your name' defaultValue='' ref="author" onChange={this.onAuthorChange}/>
+          <input className="test-input"
+                 type="text"
+                 placeholder='Your name'
+                 onChange={this.onInputValid.bind(this, 'authorIsEmpty')}
+                 ref="author"/>
         </label>
         <label>I agree with rules
-          <input defaultChecked={false} ref='checkrule' type="checkbox" onChange={this.onCheckRuleClick}/>
+          <input defaultChecked={false}
+                 type="checkbox"
+                 onChange={this.onCheckRuleClick}/>
         </label>
         <label>Description
-          <textarea defaultValue='' placeholder='Текст новости' ref='text' onChange={this.onTextChange}/>
+          <textarea defaultValue='' placeholder='Текст новости'
+                    onChange={this.onInputValid.bind(this, 'textIsEmpty')}
+                    ref="text"/>
         </label>
-        <button onClick={this.onBtnClick} disabled={disabledSendBtn}>Add</button>
+        <button onClick={this.onBtnClick}
+                disabled={disabledSendBtn}>Add
+        </button>
       </form>
     );
   }
