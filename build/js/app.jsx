@@ -26,7 +26,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <h3 className="title-head">Новости</h3>
-        <TestInput />
+        <Add />
         <News data={newsData}/>
       </div>
     );
@@ -105,27 +105,91 @@ class Article extends React.Component {
 }
 
 // Input
-class TestInput extends React.Component {
+class Add extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      myValue: ''
+      myValue: '',
+      disabled: true,
+      authorIsEmpty: true,
+      textIsEmpty: true
     };
 
     this.onBtnClick = this.onBtnClick.bind(this);
+    this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
+    this.onAuthorChange  = this.onAuthorChange.bind(this);
+    this.onTextChange = this.onTextChange.bind(this);
   }
 
-  onBtnClick() {
-    alert(ReactDOM.findDOMNode(this.refs.myTestInput).value);
+  componentWillMount() {
+    console.log('before start')
+  }
+
+  componentDidMount() {
+    console.log('componet start')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props, nextProps);
+  }
+
+  componentWillUnmount() {
+    console.log('delete component');
+  }
+
+  componentDidUpdate() {
+    console.log('update');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return true
+  }
+
+  onBtnClick(ev) {
+    ev.preventDefault();
+    var author = ReactDOM.findDOMNode(this.refs.author).value;
+    var text = ReactDOM.findDOMNode(this.refs.text).value;
+    console.log(author, text);
+  }
+
+  onCheckRuleClick(ev) {
+    this.setState({
+      disabled: !ev.target.checked
+    })
+  }
+
+  onAuthorChange(ev) {
+    if (ev.target.value.trim().length > 0) {
+      this.setState({authorIsEmpty: false})
+    } else {
+      this.setState({authorIsEmpty: true})
+    }
+  }
+
+  onTextChange(ev) {
+    if (ev.target.value.trim().length > 0) {
+      this.setState({textIsEmpty: false})
+    } else {
+      this.setState({textIsEmpty: true})
+    }
   }
 
   render() {
+    let disabledSendBtn = this.state.disabled || this.state.textIsEmpty || this.state.authorIsEmpty;
     return (
-      <div>
-        <input className="test-input" type="text" defaultValue='' ref="myTestInput"/>
-        <button onClick={this.onBtnClick}>Show value</button>
-      </div>
+      <form name="add_news" className="add_news">
+        <label>Author
+          <input className="test-input" type="text" placeholder='Your name' defaultValue='' ref="author" onChange={this.onAuthorChange}/>
+        </label>
+        <label>I agree with rules
+          <input defaultChecked={false} ref='checkrule' type="checkbox" onChange={this.onCheckRuleClick}/>
+        </label>
+        <label>Description
+          <textarea defaultValue='' placeholder='Текст новости' ref='text' onChange={this.onTextChange}/>
+        </label>
+        <button onClick={this.onBtnClick} disabled={disabledSendBtn}>Add</button>
+      </form>
     );
   }
 }

@@ -16,7 +16,7 @@
   "devDependencies": {
     "gulp": "latest",
     "gulp-stylus": "latest",
-    "gulp-sourcemap": "latest",
+    "gulp-sourcemaps": "latest",
     "browser-sync": "latest",
     "vinyl-named": "latest",
     "gulp-concat": "latest",
