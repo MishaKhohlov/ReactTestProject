@@ -1,0 +1,31 @@
+{
+  "name": "react-ru-tutorial",
+  "version": "1.0.0",
+  "description": "React RU tutorial",
+  "main": "index.html",
+  "scripts": {
+    "start": "gulp"
+  },
+  "dependencies": {
+    "normalize.css": "^3.0.3",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "jquery": "latest",
+    "redux": "latest"
+  },
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-stylus": "latest",
+    "gulp-sourcemap": "latest",
+    "browser-sync": "latest",
+    "vinyl-named": "latest",
+    "gulp-concat": "latest",
+    "webpack-stream": "latest",
+    "babel-loader": "latest",
+    "babel-core": "latest",
+    "babel-preset-es2015": "latest",
+    "babel-preset-react": "latest"
+  },
+  "author": "Mykhailo Khohlov",
+  "license": "MIT"
+}
