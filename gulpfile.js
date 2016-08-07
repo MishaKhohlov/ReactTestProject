@@ -45,7 +45,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', function () {
   gulp.watch('build/index.html', ['html']);
-  gulp.watch('build/js/app.jsx', ['es6-react']);
+  gulp.watch(['build/js/**/*.**'], ['es6-react']);
   gulp.watch('build/style/common.styl', ['styl']);
 });
 
