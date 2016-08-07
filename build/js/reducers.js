@@ -1,5 +1,4 @@
-let { VisibilityFilters } = require('./action');
-
+let VisibilityFilters = require('./action').VisibilityFilters;
 let ADD_TODO = require('./action').ADD_TODO;
 let TOGGLE_TODO = require('./action').TOGGLE_TODO;
 let SET_VISIBILITY_FILTER = require('./action').SET_VISIBILITY_FILTER;

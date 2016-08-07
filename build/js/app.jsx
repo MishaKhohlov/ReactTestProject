@@ -1,20 +1,18 @@
 let React = require('react');
 let ReactDOM = require('react-dom');
 let $ = require('jquery');
-let { VisibilityFilters } = require('./action');
 
-let ADD_TODO = require('./action').ADD_TODO;
-let TOGGLE_TODO = require('./action').TOGGLE_TODO;
-let SET_VISIBILITY_FILTER = require('./action').SET_VISIBILITY_FILTER;
+let VisibilityFilters = require('./action').VisibilityFilters;
+let addTodo = require('./action').addTodo;
+let toggleTodo = require('./action').toggleTodo;
+let setVisibilityFilter = require('./action').setVisibilityFilter;
+
 let todoApp = require('./reducers');
 
-let state = todoApp(state, {type: SET_VISIBILITY_FILTER, filter: VisibilityFilters.SHOW_COMPLETED});
-state = todoApp(state, {type: ADD_TODO, text: 'Hello_world'});
-state = todoApp(state, {type: ADD_TODO, text: 'Hello_world1'});
-state = todoApp(state, {type: ADD_TODO, text: 'Hello_world2'});
-state = todoApp(state, {type: ADD_TODO, text: 'Hello_world3'});
-state = todoApp(state, {type: TOGGLE_TODO, index: 0});
-state = todoApp(state, {type: TOGGLE_TODO, index: 2});
+let state = todoApp(state, setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+state = todoApp(state, addTodo('Hello world'));
+state = todoApp(state, toggleTodo(0));
+
 console.log(state);
 
 let newsData = [
