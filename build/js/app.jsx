@@ -28,6 +28,8 @@ class App extends React.Component {
     this.state = {
       news: newsData
     };
+
+    this.addNewItem = this.addNewItem.bind(this);
   }
 
   componentDidMount() {
@@ -38,11 +40,23 @@ class App extends React.Component {
 
   }
 
+  addNewItem(name, text, descr) {
+    this.state.news.push({
+      author: name,
+      text: text,
+      bigText: descr
+    });
+    this.setState({
+      news: this.state.news
+    });
+  }
+
+
   render() {
     return (
       <div className="app">
         <h3 className="title-head">Новости</h3>
-        <Add />
+        <Add add={this.addNewItem}/>
         <News data={this.state.news}/>
       </div>
     );
@@ -57,6 +71,15 @@ class News extends React.Component {
     this.state = {
       counter: 0
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps, nextState);
+    return true
   }
 
   render() {
@@ -126,10 +149,10 @@ class Add extends React.Component {
     super(props);
 
     this.state = {
-      myValue: '',
-      disabled: true,
-      authorIsEmpty: true,
-      textIsEmpty: true
+      disabled: false,
+      authorIsEmpty: '',
+      textIsEmpty: '',
+      fullTextIsEmpty: ''
     };
 
     this.onBtnClick = this.onBtnClick.bind(this);
@@ -141,11 +164,7 @@ class Add extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componet start')
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props, nextProps);
+    console.log('componet start');
   }
 
   componentWillUnmount() {
@@ -162,51 +181,65 @@ class Add extends React.Component {
 
   onBtnClick(ev) {
     ev.preventDefault();
-    var author = ReactDOM.findDOMNode(this.refs.author).value;
-    var text = ReactDOM.findDOMNode(this.refs.text).value;
-    console.log(author, text);
+
+    let author = ReactDOM.findDOMNode(this.refs.author);
+    let text = ReactDOM.findDOMNode(this.refs.text);
+    let full_text = ReactDOM.findDOMNode(this.refs.full_text);
+
+    this.setState({
+      disabled: false,
+      authorIsEmpty: '',
+      textIsEmpty: '',
+      fullTextIsEmpty: ''
+    });
+
+    this.props.add(author.value, text.value, full_text.value);
   }
 
   onCheckRuleClick(ev) {
     this.setState({
-      disabled: !ev.target.checked
+      disabled: ev.target.checked
     })
   }
 
   onInputValid(fieldName, ev) {
-    let state = {};
-    if (ev.target.value.trim().length > 0) {
-      state[fieldName] = false;
-    } else {
-      state[fieldName] = true;
-    }
-    this.setState(state);
-
+    this.setState({
+      [fieldName] : ev.target.value
+    });
   }
 
   render() {
-    let disabledSendBtn = this.state.disabled || this.state.textIsEmpty || this.state.authorIsEmpty;
+    let disabledSendBtn = this.state.disabled && !!this.state.textIsEmpty.trim().length && !!this.state.authorIsEmpty.trim().length && !!this.state.fullTextIsEmpty.trim().length;
+
     return (
       <form name="add_news" className="add_news">
         <label>Author
           <input className="test-input"
                  type="text"
                  placeholder='Your name'
+                 value={this.state.authorIsEmpty}
                  onChange={this.onInputValid.bind(this, 'authorIsEmpty')}
                  ref="author"/>
         </label>
         <label>I agree with rules
-          <input defaultChecked={false}
+          <input checked={this.state.disabled}
                  type="checkbox"
                  onChange={this.onCheckRuleClick}/>
         </label>
-        <label>Description
-          <textarea defaultValue='' placeholder='Текст новости'
+        <label>Text
+          <textarea placeholder='Текст новости'
+                    value={this.state.textIsEmpty}
                     onChange={this.onInputValid.bind(this, 'textIsEmpty')}
                     ref="text"/>
         </label>
+        <label>Description
+          <textarea placeholder='Полный текст новости'
+                    value={this.state.fullTextIsEmpty}
+                    onChange={this.onInputValid.bind(this, 'fullTextIsEmpty')}
+                    ref="full_text"/>
+        </label>
         <button onClick={this.onBtnClick}
-                disabled={disabledSendBtn}>Add
+                disabled={!disabledSendBtn}>Add
         </button>
       </form>
     );
