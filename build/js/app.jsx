@@ -2,18 +2,8 @@ let React = require('react');
 let ReactDOM = require('react-dom');
 let $ = require('jquery');
 
-let VisibilityFilters = require('./action').VisibilityFilters;
-let addTodo = require('./action').addTodo;
-let toggleTodo = require('./action').toggleTodo;
-let setVisibilityFilter = require('./action').setVisibilityFilter;
-
-let todoApp = require('./reducers');
-
-let state = todoApp(state, setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
-state = todoApp(state, addTodo('Hello world'));
-state = todoApp(state, toggleTodo(0));
-
-console.log(state);
+let init = require('./store');
+init();
 
 let newsData = [
   {

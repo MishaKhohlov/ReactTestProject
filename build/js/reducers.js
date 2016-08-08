@@ -1,13 +1,12 @@
+let combineReducers  = require('Redux').combineReducers;
+
 let VisibilityFilters = require('./action').VisibilityFilters;
+
 let ADD_TODO = require('./action').ADD_TODO;
 let TOGGLE_TODO = require('./action').TOGGLE_TODO;
 let SET_VISIBILITY_FILTER = require('./action').SET_VISIBILITY_FILTER;
 
-const initialState = {
-  visibilityFilter: VisibilityFilters.SHOW_ALL,
-  todos: []
-};
-
+// default value important without init state
 function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
@@ -17,6 +16,7 @@ function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
   }
 }
 
+// default value important without init state
 function todos(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
@@ -41,12 +41,16 @@ function todos(state = [], action) {
   }
 }
 
-
-function todoApp(state = {}, action) {
+// start state for child reducer get for key in object
+const todoApp = combineReducers({
+  visibilityFilter,
+  todos
+});
+/*function todoApp(state, action) {
   return {
     visibilityFilter: visibilityFilter(state.visibilityFilter, action),
     todos: todos(state.todos, action)
   }
-}
+}*/
 
 module.exports = todoApp;
