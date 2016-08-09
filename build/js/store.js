@@ -19,7 +19,6 @@ let store = createStore(todoApp, initialState);
 
 function init() {
   // console.log('start state',store.getState());
-
   let unsubscribe = store.subscribe(() =>
     console.log(store.getState())
   );
