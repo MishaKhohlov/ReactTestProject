@@ -12,12 +12,15 @@ class App extends React.Component {
 
   render() {
     let data = [
-      {id: 0, text: 'Name 1', completed: true},
-      {id: 1, text: 'Name 2', completed: true}
+      {id: 0, text: 'Name 1', completed: false},
+      {id: 1, text: 'Name 2', completed: false}
     ];
 
     return (
-      <TodoList todos={data}/>
+      <div>
+        <TodoList todos={data}/>
+        <Footer/>
+      </div>
     );
   }
 }
@@ -77,10 +80,93 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <li>{this.props.text}</li>
+      <li className={this.props.completed ? 'line-through' : ''}>
+        {this.props.text}
+      </li>
     );
   }
 }
+
+Todo.propTypes = {
+  completed: React.PropTypes.bool.isRequired,
+  text: React.PropTypes.string.isRequired
+};
+
+class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      active: 'SHOW_ALL'
+    };
+
+    this.clickLink = this.clickLink.bind(this);
+  }
+
+  clickLink(type_filter) {
+    this.setState({
+      active: type_filter
+    });
+  }
+
+  render() {
+    return (
+      <footer>
+        <ul>
+          <p>Отфильтровать</p>
+          <Link filter="SHOW_ALL"
+                active={this.state.active}
+                clickLink={this.clickLink}>
+            All
+          </Link>
+          <Link filter="SHOW_ACTIVE"
+                active={this.state.active}
+                clickLink={this.clickLink}>
+            Active
+          </Link>
+          <Link filter="SHOW_COMPLETED"
+                active={this.state.active}
+                clickLink={this.clickLink}>
+            Completed
+          </Link>
+        </ul>
+      </footer>
+    );
+  }
+}
+
+class Link extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    const filter = this.props.filter;
+    let active = filter === this.props.active;
+
+    if (active) {
+      return ( <li><span>{this.props.children}</span></li> );
+    }
+
+    return (
+      <li
+        onClick={e => {
+        e.preventDefault();
+        this.props.clickLink(filter)
+      }}>
+        <a href="#">{this.props.children}</a>
+      </li>
+    );
+  }
+}
+
+Link.propTypes = {
+  active: React.PropTypes.string.isRequired,
+  children: React.PropTypes.string.isRequired,
+  clickLink: React.PropTypes.func.isRequired
+};
 
 ReactDOM.render(
   <App />,
