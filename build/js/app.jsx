@@ -8,7 +8,10 @@ let todoAppReducers = require('./reducers');
 
 const initialState = {
   visibilityFilter: Action.VisibilityFilters.SHOW_ALL,
-  todos: []
+  todos: [
+    {id: 0, text: 'Name 1', completed: false},
+    {id: 1, text: 'Name 2', completed: false}
+  ]
 };
 
 let store = Redux.createStore(todoAppReducers, initialState);
@@ -22,21 +25,17 @@ class App extends React.Component {
   }
 
   render() {
-    let data = [
-      {id: 0, text: 'Name 1', completed: false},
-      {id: 1, text: 'Name 2', completed: false}
-    ];
-
     return (
       <div>
         <h2>My test app with React and Redux</h2>
         <Add/>
-        <TodoList todos={data}/>
+        <VisibleTodoList/>
         <Footer/>
       </div>
     );
   }
 }
+/*<TodoList todos={data}/>*/
 
 class Add extends React.Component {
   constructor(props) {
@@ -75,6 +74,9 @@ class Add extends React.Component {
   }
 }
 
+// TODO LIST ---------------
+
+
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -92,6 +94,7 @@ class TodoList extends React.Component {
       listTodo = data.map(item => {
         return (
           <Todo
+            onClickProps={() => this.props.onTodoClick(item.id)}
             key={item.id}
             {...item}
           />
@@ -121,6 +124,8 @@ TodoList.propTypes = {
   // onTodoClick: React.PropTypes.func.isRequired
 };
 
+// TODO ----------------------
+
 class Todo extends React.Component {
   constructor(props) {
     super(props);
@@ -130,7 +135,8 @@ class Todo extends React.Component {
 
   render() {
     return (
-      <li className={this.props.completed ? 'line-through' : ''}>
+      <li onClick={this.props.onClickProps}
+          className={this.props.completed ? 'line-through' : ''}>
         {this.props.text}
       </li>
     );
@@ -141,6 +147,45 @@ Todo.propTypes = {
   completed: React.PropTypes.bool.isRequired,
   text: React.PropTypes.string.isRequired
 };
+
+// VISIBLE TODO LIST ---------------
+
+// convert redux view in state
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos;
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed);
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed);
+  }
+};
+
+// return props
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(state.todos, state.visibilityFilter)
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      console.log(id);
+      dispatch(Action.toggleTodo(id))
+    }
+  }
+};
+
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList);
+
+
+// FOOTER -------------------------
+
 
 class Footer extends React.Component {
   constructor(props) {
@@ -184,6 +229,10 @@ class Footer extends React.Component {
     );
   }
 }
+
+
+// Links -----------------
+
 
 class Link extends React.Component {
   constructor(props) {

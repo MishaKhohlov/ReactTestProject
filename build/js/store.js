@@ -4,10 +4,10 @@
 // let {addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters} = require('./action');
 
 
-const initialState = {
-  visibilityFilter: VisibilityFilters.SHOW_ALL,
-  todos: []
-};
+//const initialState = {
+//  visibilityFilter: VisibilityFilters.SHOW_ALL,
+//  todos: []
+//};
 // connect store with global reducer
 // let store = createStore(todoApp, initialState);
 
@@ -34,4 +34,4 @@ function init() {
   unsubscribe();
 }
 
-module.exports = init;
+//module.exports = init;

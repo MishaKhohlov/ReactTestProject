@@ -14,13 +14,18 @@ const VisibilityFilters = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
-
+let nextTodoId = 0;
 
 /*
  * генераторы действий
  */
+
 function addTodo(text) {
-  return { type: ADD_TODO, text }
+  return {
+    type: ADD_TODO,
+    id: nextTodoId++,
+    text
+  }
 }
 
 function toggleTodo(index) {
