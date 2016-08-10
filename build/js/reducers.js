@@ -42,7 +42,7 @@ function todos(state = [], action) {
 }
 
 // start state for child reducer get for key in object
-const todoApp = combineReducers({
+const todoAppReducers = combineReducers({
   visibilityFilter,
   todos
 });
@@ -53,4 +53,4 @@ const todoApp = combineReducers({
   }
 }*/
 
-module.exports = todoApp;
+module.exports = todoAppReducers;

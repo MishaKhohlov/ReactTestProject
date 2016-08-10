@@ -1,6 +1,17 @@
+let $ = require('jquery');
 let React = require('react');
 let ReactDOM = require('react-dom');
-let $ = require('jquery');
+let Redux = require('redux');
+let { Provider, connect } = require('react-redux');
+let Action = require('./action');
+let todoAppReducers = require('./reducers');
+
+const initialState = {
+  visibilityFilter: Action.VisibilityFilters.SHOW_ALL,
+  todos: []
+};
+
+let store = Redux.createStore(todoAppReducers, initialState);
 
 // Start App
 class App extends React.Component {
@@ -18,8 +29,47 @@ class App extends React.Component {
 
     return (
       <div>
+        <h2>My test app with React and Redux</h2>
+        <Add/>
         <TodoList todos={data}/>
         <Footer/>
+      </div>
+    );
+  }
+}
+
+class Add extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      value: ''
+    };
+    this.addNewItem = this.addNewItem.bind(this);
+    this.validInput = this.validInput.bind(this);
+  }
+
+  addNewItem() {
+    let val = this.state.value;
+    if (val.trim().length > 0) {
+      console.log(val);
+    }
+  }
+
+  validInput(e) {
+    this.setState({
+      value: e.target.value
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text"
+               placeholder="add new item"
+               value={this.props.value}
+               onChange={this.validInput}/>
+        <button onClick={this.addNewItem}>Add item</button>
       </div>
     );
   }
@@ -163,12 +213,18 @@ class Link extends React.Component {
 }
 
 Link.propTypes = {
-  active: React.PropTypes.string.isRequired,
+  active: React.PropTypes.oneOf([
+    'SHOW_ALL',
+    'SHOW_COMPLETED',
+    'SHOW_ACTIVE'
+  ]).isRequired,
   children: React.PropTypes.string.isRequired,
   clickLink: React.PropTypes.func.isRequired
 };
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   $('#body')[0]
 );
