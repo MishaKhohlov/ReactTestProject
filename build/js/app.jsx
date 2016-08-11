@@ -6,6 +6,11 @@ let { Provider, connect } = require('react-redux');
 let Action = require('./action');
 let todoAppReducers = require('./reducers');
 
+//let unsubscribe = store.subscribe(() =>
+//  console.log(store.getState())
+//);
+// unsubscribe();
+
 const initialState = {
   visibilityFilter: Action.VisibilityFilters.SHOW_ALL,
   todos: [
@@ -30,7 +35,7 @@ class App extends React.Component {
         <h2>My test app with React and Redux</h2>
         <Add/>
         <VisibleTodoList/>
-        <Footer/>
+        <FilterLink/>
       </div>
     );
   }
@@ -73,6 +78,7 @@ class Add extends React.Component {
     );
   }
 }
+
 
 // TODO LIST ---------------
 
@@ -172,7 +178,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      console.log(id);
       dispatch(Action.toggleTodo(id))
     }
   }
@@ -191,17 +196,7 @@ class Footer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      active: 'SHOW_ALL'
-    };
-
-    this.clickLink = this.clickLink.bind(this);
-  }
-
-  clickLink(type_filter) {
-    this.setState({
-      active: type_filter
-    });
+    this.state = {};
   }
 
   render() {
@@ -210,18 +205,18 @@ class Footer extends React.Component {
         <ul>
           <p>Отфильтровать</p>
           <Link filter="SHOW_ALL"
-                active={this.state.active}
-                clickLink={this.clickLink}>
+                active={this.props.active}
+                clickLink={this.props.clickLink}>
             All
           </Link>
           <Link filter="SHOW_ACTIVE"
-                active={this.state.active}
-                clickLink={this.clickLink}>
+                active={this.props.active}
+                clickLink={this.props.clickLink}>
             Active
           </Link>
           <Link filter="SHOW_COMPLETED"
-                active={this.state.active}
-                clickLink={this.clickLink}>
+                active={this.props.active}
+                clickLink={this.props.clickLink}>
             Completed
           </Link>
         </ul>
@@ -270,6 +265,26 @@ Link.propTypes = {
   children: React.PropTypes.string.isRequired,
   clickLink: React.PropTypes.func.isRequired
 };
+
+const mapStateToProps1 = (state) => {
+  return {
+    active: state.visibilityFilter
+  }
+};
+
+const mapDispatchToProps1 = (dispatch) => {
+  return {
+    clickLink: (typeFilter) => {
+      dispatch(Action.setVisibilityFilter(typeFilter))
+    }
+  }
+};
+
+const FilterLink = connect(
+  mapStateToProps1,
+  mapDispatchToProps1
+)(Footer);
+
 
 ReactDOM.render(
   <Provider store={store}>
