@@ -14,7 +14,6 @@ const VisibilityFilters = {
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
-let nextTodoId = 0;
 
 /*
  * генераторы действий
@@ -23,7 +22,6 @@ let nextTodoId = 0;
 function addTodo(text) {
   return {
     type: ADD_TODO,
-    id: nextTodoId++,
     text
   }
 }

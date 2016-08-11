@@ -6,11 +6,7 @@ let { Provider, connect } = require('react-redux');
 let Action = require('./action');
 let todoAppReducers = require('./reducers');
 
-//let unsubscribe = store.subscribe(() =>
-//  console.log(store.getState())
-//);
-// unsubscribe();
-
+// init data
 const initialState = {
   visibilityFilter: Action.VisibilityFilters.SHOW_ALL,
   todos: [
@@ -23,29 +19,25 @@ let store = Redux.createStore(todoAppReducers, initialState);
 
 // Start App
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   render() {
     return (
       <div>
         <h2>My test app with React and Redux</h2>
-        <Add/>
+        <AddTodo/>
         <VisibleTodoList/>
         <FilterLink/>
       </div>
     );
   }
 }
-/*<TodoList todos={data}/>*/
+
+
+// ADD  -----------
+
 
 class Add extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       value: ''
     };
@@ -56,7 +48,10 @@ class Add extends React.Component {
   addNewItem() {
     let val = this.state.value;
     if (val.trim().length > 0) {
-      console.log(val);
+      this.props.dispatch(Action.addTodo(val));
+      this.setState({
+        value: ''
+      })
     }
   }
 
@@ -71,7 +66,7 @@ class Add extends React.Component {
       <div>
         <input type="text"
                placeholder="add new item"
-               value={this.props.value}
+               value={this.state.value}
                onChange={this.validInput}/>
         <button onClick={this.addNewItem}>Add item</button>
       </div>
@@ -79,21 +74,15 @@ class Add extends React.Component {
   }
 }
 
+const AddTodo = connect()(Add);
 
-// TODO LIST ---------------
+
+// TODOLIST ---------------
 
 
 class TodoList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   render() {
-    // let data = this.props.data;
     let listTodo;
-    // test
     let data = this.props.todos;
 
     if (data.length > 0) {
@@ -126,19 +115,15 @@ TodoList.propTypes = {
     id: React.PropTypes.number.isRequired,
     text: React.PropTypes.string.isRequired,
     completed: React.PropTypes.bool.isRequired
-  }).isRequired).isRequired
-  // onTodoClick: React.PropTypes.func.isRequired
+  }).isRequired).isRequired,
+  onTodoClick: React.PropTypes.func.isRequired
 };
 
-// TODO ----------------------
+
+// TODOITEM ----------------------
+
 
 class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   render() {
     return (
       <li onClick={this.props.onClickProps}
@@ -154,7 +139,9 @@ Todo.propTypes = {
   text: React.PropTypes.string.isRequired
 };
 
-// VISIBLE TODO LIST ---------------
+
+// VISIBLE TODOITEM LIST ---------------
+
 
 // convert redux view in state
 const getVisibleTodos = (todos, filter) => {
@@ -265,6 +252,10 @@ Link.propTypes = {
   children: React.PropTypes.string.isRequired,
   clickLink: React.PropTypes.func.isRequired
 };
+
+
+// FilterLink ----------
+
 
 const mapStateToProps1 = (state) => {
   return {
