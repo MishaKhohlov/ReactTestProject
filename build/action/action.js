@@ -15,10 +15,10 @@ const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 
+
 /*
  * генераторы действий
  */
-
 function addTodo(text) {
   return {
     type: ADD_TODO,
@@ -34,6 +34,6 @@ function setVisibilityFilter(filter) {
   return { type: SET_VISIBILITY_FILTER, filter }
 }
 
-module.exports = {
+export {
   addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER
 };

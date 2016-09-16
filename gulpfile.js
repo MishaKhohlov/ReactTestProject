@@ -1,5 +1,6 @@
 const gulp = require('gulp'),
   browserSync = require('browser-sync').create(),
+  gutil = require('gulp-util'),
   stylus = require('gulp-stylus'),
   named = require('vinyl-named'),
   concat = require('gulp-concat'),
@@ -8,11 +9,10 @@ const gulp = require('gulp'),
   reload = browserSync.reload;
 
 gulp.task('es6-react', function () {
-  gulp.src('build/js/app.jsx')
+  gulp.src('build/index.jsx')
     .pipe(named())
-    .pipe(webpack(require('./webpack.config.js'), null, function(err, stats) {
-      /* Use stats to do more things if needed */
-    }))
+    .pipe(webpack(require('./webpack.config.js')))
+    .on('error', gutil.log)
     .pipe(gulp.dest('dist/js'))
     .pipe(reload({stream:true}))
 });
@@ -45,7 +45,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', function () {
   gulp.watch('build/index.html', ['html']);
-  gulp.watch(['build/js/**/*.**'], ['es6-react']);
+  gulp.watch(['build/**/*.**'], ['es6-react']);
   gulp.watch('build/style/common.styl', ['styl']);
 });
 

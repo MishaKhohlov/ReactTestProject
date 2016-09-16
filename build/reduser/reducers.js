@@ -1,10 +1,5 @@
-let combineReducers  = require('Redux').combineReducers;
-
-let VisibilityFilters = require('./action').VisibilityFilters;
-
-let ADD_TODO = require('./action').ADD_TODO;
-let TOGGLE_TODO = require('./action').TOGGLE_TODO;
-let SET_VISIBILITY_FILTER = require('./action').SET_VISIBILITY_FILTER;
+import {combineReducers} from 'redux';
+import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from './../action/action';
 
 // default value important without init state
 function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
@@ -47,11 +42,14 @@ const todoAppReducers = combineReducers({
   visibilityFilter,
   todos
 });
+
+
 /*function todoApp(state, action) {
   return {
     visibilityFilter: visibilityFilter(state.visibilityFilter, action),
     todos: todos(state.todos, action)
   }
-}*/
+}
+ */
 
-module.exports = todoAppReducers;
+export {todoAppReducers};

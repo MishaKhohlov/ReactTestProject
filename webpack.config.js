@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './build/js/app.jsx',
+  entry: './build/index.jsx',
   output: { path: __dirname, filename: 'app.min.js' },
   devtool: 'source-map',
   module: {
