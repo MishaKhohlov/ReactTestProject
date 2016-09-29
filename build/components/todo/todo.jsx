@@ -1,4 +1,6 @@
 import React from 'react';
+import * as Action from '../../action/action';
+import {connect} from 'react-redux';
 
 class Todo extends React.Component {
   constructor(props) {
@@ -26,24 +28,24 @@ class Todo extends React.Component {
     if(ev.target.value.length > 1) {
 
       this.setState({
-        inputValue: ev.target.value,
-        disabled: this.defaulValue === ev.target.value
+        inputValue: ev.target.value.trim(),
+        disabled: this.defaulValue !== ev.target.value.trim()
       })
     }
   }
 
   saveNewValue() {
-
+    this.props.changeItem(this.state.inputValue, this.props.id);
   }
 
   render() {
     return (
       <li>
         <span onClick={this.props.onClickProps}
-              className={this.props.completed ? 'line-through' : ''}>{this.state.inputValue}</span>
+              className={this.props.completed ? 'line-through' : ''}>{this.props.id+1} - {this.state.inputValue}</span>
         <button className="editBtn"
                 onClick={this.showEditInput}>
-          {this.state.inputView ? 'Show' : 'Hide'}
+          {this.state.inputView ? 'Hide' : 'Show'}
         </button>
         <input type="text"
                className={this.state.inputView ? '' : 'none'}
@@ -62,4 +64,21 @@ Todo.propTypes = {
   text: React.PropTypes.string.isRequired
 };
 
-export default Todo;
+const mapStateToProps = (state) => {
+  return state
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeItem: (newVal, key) => {
+      dispatch(Action.setNewValueItem(key, newVal))
+    }
+  }
+};
+
+const TodoConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Todo);
+
+export default TodoConnect;

@@ -1,7 +1,13 @@
 import React from 'react';
-import Todo from '../todo/todo.jsx'
+import Todo from '../todo/todo.jsx';
+
 
 class TodoList extends React.Component {
+
+  componentWillReceiveProps() {
+    console.log(this.props.todos);
+  }
+
   render() {
     let listTodo;
     let data = this.props.todos;
@@ -39,5 +45,6 @@ TodoList.propTypes = {
   }).isRequired).isRequired,
   onTodoClick: React.PropTypes.func.isRequired
 };
+
 
 export default TodoList;
