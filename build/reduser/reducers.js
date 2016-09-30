@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, CHANGE_TODO, VisibilityFilters } from './../action/action';
+import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, CHANGE_TODO, DELETE_ITEM, VisibilityFilters } from './../action/action';
 
 // default value important without init state
 function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
@@ -36,6 +36,12 @@ function todos(state = [], action) {
       let newArray = [...state];
       newArray[action.id].text = action.value;
       return newArray;
+    case DELETE_ITEM:
+      let newSliceArray = [...state];
+      console.log(newSliceArray);
+      newSliceArray.splice(action.id, 1);
+      console.log(newSliceArray);
+      return newSliceArray;
     default:
       return state
   }

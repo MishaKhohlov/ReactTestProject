@@ -12,8 +12,8 @@ import App from './components/app/app.jsx'
 const initialState = {
   visibilityFilter: VisibilityFilters.SHOW_ALL,
   todos: [
-    {id: 0, text: 'Name 1', completed: false},
-    {id: 1, text: 'Name 2', completed: false}
+    {text: 'Name 1', completed: false},
+    {text: 'Name 2', completed: false}
   ]
 };
 

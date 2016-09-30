@@ -16,17 +16,19 @@ class Todo extends React.Component {
     this.showEditInput = this.showEditInput.bind(this);
     this.validInput = this.validInput.bind(this);
     this.saveNewValue = this.saveNewValue.bind(this);
+    this.deletedItem = this.deletedItem.bind(this);
   }
 
   showEditInput() {
     this.setState({
-      inputView: !this.state.inputView
+      inputView: !this.state.inputView,
+      inputValue: this.defaulValue,
+      disabled: false
     })
   }
 
   validInput(ev) {
     if(ev.target.value.length > 1) {
-
       this.setState({
         inputValue: ev.target.value.trim(),
         disabled: this.defaulValue !== ev.target.value.trim()
@@ -36,6 +38,21 @@ class Todo extends React.Component {
 
   saveNewValue() {
     this.props.changeItem(this.state.inputValue, this.props.id);
+  }
+
+  componentWillReceiveProps(props) {
+    if(this.props.text !== props.text) {
+      this.defaulValue = props.text;
+      this.setState({
+          inputView: false,
+          inputValue: props.text,
+          disabled: false
+        })
+    }
+  }
+
+  deletedItem() {
+    this.props.deleteItem(this.props.id);
   }
 
   render() {
@@ -49,11 +66,13 @@ class Todo extends React.Component {
         </button>
         <input type="text"
                className={this.state.inputView ? '' : 'none'}
-               defaultValue={this.props.text}
+               value={this.state.inputValue}
                onChange={this.validInput}/>
         <button className="editBtn"
                 onClick={this.saveNewValue}
                 disabled={!this.state.disabled}>Save</button>
+        <button className="editBtn"
+                onClick={this.deletedItem}>X</button>
       </li>
     );
   }
@@ -65,13 +84,16 @@ Todo.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  return state
+  return {}
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeItem: (newVal, key) => {
       dispatch(Action.setNewValueItem(key, newVal))
+    },
+    deleteItem: (key) => {
+      dispatch(Action.deleteItem(key))
     }
   }
 };

@@ -5,6 +5,7 @@ const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
 const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 const CHANGE_TODO = 'CHANGE_TODO';
+const DELETE_ITEM = 'DELETE_ITEM';
 
 
 /*
@@ -40,14 +41,20 @@ function setNewValueItem(id, val) {
   return {type: CHANGE_TODO, id: id, value: val}
 }
 
+function deleteItem(id) {
+  return {type: DELETE_ITEM, id: id}
+}
+
 export {
   addTodo,
   toggleTodo,
   setVisibilityFilter,
   setNewValueItem,
+  deleteItem,
   VisibilityFilters,
   ADD_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
-  CHANGE_TODO
+  CHANGE_TODO,
+  DELETE_ITEM
 };
