@@ -16,7 +16,7 @@ class Todo extends React.Component {
     this.showEditInput = this.showEditInput.bind(this);
     this.validInput = this.validInput.bind(this);
     this.saveNewValue = this.saveNewValue.bind(this);
-    this.deletedItem = this.deletedItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   showEditInput() {
@@ -41,19 +41,17 @@ class Todo extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if(this.props.text !== props.text) {
-      this.defaulValue = props.text;
-      this.setState({
-          inputView: false,
-          inputValue: props.text,
-          disabled: false
-        })
-    }
+    this.defaulValue = props.text;
+    this.setState({
+      inputView: false,
+      inputValue: props.text,
+      disabled: false
+    })
   }
 
-  deletedItem() {
-    this.props.deleteItem(this.props.id);
-  }
+ deleteItem() {
+   this.props.deleteItem()
+ }
 
   render() {
     return (
@@ -72,7 +70,7 @@ class Todo extends React.Component {
                 onClick={this.saveNewValue}
                 disabled={!this.state.disabled}>Save</button>
         <button className="editBtn"
-                onClick={this.deletedItem}>X</button>
+                onClick={this.deleteItem}>X</button>
       </li>
     );
   }
@@ -83,7 +81,7 @@ Todo.propTypes = {
   text: React.PropTypes.string.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (props) => {
   return {}
 };
 

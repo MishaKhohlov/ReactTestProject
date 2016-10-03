@@ -19,7 +19,6 @@ function todos(state = [], action) {
         ...state,
         {
           text: action.text,
-          id: state.length,
           completed: false
         }
       ];
