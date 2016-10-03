@@ -13,7 +13,6 @@ class TodoList extends React.Component {
 
     if (data.length > 0) {
       listTodo = data.map((item, i) => {
-        console.log(i);
         return (
           <Todo
             onClickProps={() => this.props.onTodoClick(i)}
