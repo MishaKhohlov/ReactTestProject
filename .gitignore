@@ -4,3 +4,4 @@ test/
 dist/
 dist/js/app.min.js.map
 dist/js/app.min.js
+myreadme.md

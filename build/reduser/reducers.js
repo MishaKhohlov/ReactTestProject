@@ -51,14 +51,14 @@ function posts(state = {
   }
 }
 
-function selectedSubreddit(state = 'reactjs', action) {
+/*function selectedSubreddit(state = 'reactjs', action) {
   switch (action.type) {
     case SELECT_SUBREDDIT:
       return action.subreddit;
     default:
       return state
   }
-}
+}*/
 
 function postsBySubreddit(state = {}, action) {
   switch (action.type) {
@@ -108,8 +108,7 @@ function postsBySubreddit(state = {}, action) {
 
 
 const rootReducer = combineReducers({
-  postsBySubreddit,
-  selectedSubreddit
+  postsBySubreddit
 });
 
 // start state for child reducer get for key in object

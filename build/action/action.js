@@ -71,7 +71,7 @@ function receivePosts(subreddit, json) {
   return {
     type: RECEIVE_POSTS,
     subreddit,
-    posts: json.data.children.map(child => child.data),
+    posts: json.user,
     receivedAt: Date.now()
   }
 }
@@ -79,10 +79,8 @@ function receivePosts(subreddit, json) {
 function fetchPosts(subreddit) {
   return function (dispatch) {
     dispatch(requestPosts(subreddit));
-    return fetch(`http://www.reddit.com/r/${subreddit}.json`)
-      .then(response => {
-        return response.json()
-      })
+    return fetch(`${subreddit}.json`)
+      .then(respond => respond.json())
       .then(json => {
           dispatch(receivePosts(subreddit, json))
         }

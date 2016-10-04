@@ -21,11 +21,11 @@ const store = createStore(
   )
 );
 
-store.dispatch(selectSubreddit('reactjs'));
-//
-// store.dispatch(fetchPosts('reactjs')).then(() =>
-//   console.log(store.getState())
-// );
+// store.dispatch(selectSubreddit('reactjs'));
+// subreddit - reactjsю prop with data load
+store.dispatch(fetchPosts('exampleServerData')).then(() =>
+  console.log(store.getState())
+);
 
 
 
