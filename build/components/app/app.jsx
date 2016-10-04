@@ -1,6 +1,7 @@
 import React from 'react';
 import AddTodo from '../addTodo/addTodo.jsx';
 import VisibleTodoList from '../visibleTodoList/visibleTodoList.jsx';
+import UserListConnect from '../userList/userList.jsx';
 import FilterLink from '../filterLink/filterLink.jsx';
 
 // Start App
@@ -12,6 +13,7 @@ class App extends React.Component {
         <AddTodo/>
         <VisibleTodoList/>
         <FilterLink/>
+        <UserListConnect/>
       </div>
     );
   }

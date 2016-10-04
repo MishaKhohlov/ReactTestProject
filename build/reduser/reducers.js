@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import {
- /* ADD_TODO,
+  ADD_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
   CHANGE_TODO,
-  DELETE_ITEM,*/
+  DELETE_ITEM,
   SELECT_SUBREDDIT,
   INVALIDATE_SUBREDDIT,
   REQUEST_POSTS,
@@ -13,14 +13,14 @@ import {
 } from './../action/action';
 
 // default value important without init state
-/*function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
+function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
       return action.filter;
     default:
       return state
   }
-}*/
+}
 
 
 // slice reducer on small parts
@@ -51,14 +51,14 @@ function posts(state = {
   }
 }
 
-/*function selectedSubreddit(state = 'reactjs', action) {
+function selectedSubreddit(state = 'reactjs', action) {
   switch (action.type) {
     case SELECT_SUBREDDIT:
       return action.subreddit;
     default:
       return state
   }
-}*/
+}
 
 function postsBySubreddit(state = {}, action) {
   switch (action.type) {
@@ -74,7 +74,7 @@ function postsBySubreddit(state = {}, action) {
 }
 
 // default value important without init state
-/*function todos(state = [], action) {
+function todos(state = [], action) {
   switch (action.type) {
     case ADD_TODO:
       return [
@@ -104,19 +104,17 @@ function postsBySubreddit(state = {}, action) {
     default:
       return state
   }
-}*/
+}
 
 
 const rootReducer = combineReducers({
+  visibilityFilter,
+  todos,
   postsBySubreddit
 });
 
-// start state for child reducer get for key in object
-/*const todoAppReducers = combineReducers({
-  visibilityFilter,
-  todos
-});*/
 
+// start state for child reducer get for key in object
 
 /*function todoApp(state, action) {
   return {
