@@ -1,54 +1,45 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import {createStore, applyMiddleware } from 'redux';
 import {Provider, connect} from 'react-redux';
-import {VisibilityFilters} from './action/action';
-import {todoAppReducers} from './reduser/reducers';
+import {VisibilityFilters, selectSubreddit, fetchPosts } from './action/action';
+// import {todoAppReducers, rootReducer} from './reduser/reducers';
+import {rootReducer} from './reduser/reducers';
+
+
+
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // neat middleware that logs actions
+  )
+);
+
+store.dispatch(selectSubreddit('reactjs'));
+//
+// store.dispatch(fetchPosts('reactjs')).then(() =>
+//   console.log(store.getState())
+// );
+
+
+
 
 import App from './components/app/app.jsx'
 
 // init data
+/*
 const initialState = {
   visibilityFilter: VisibilityFilters.SHOW_ALL,
   todos: [
     {text: 'Name1', completed: false},
     {text: 'Name2', completed: false}
-  ],
-  selectedSubreddit: 'frontend',
-  postsBySubreddit: {
-    frontend: {
-      isFetching: true,
-      didInvalidate: false,
-      items: []
-    },
-    reactjs: {
-      isFetching: false,
-      didInvalidate: false,
-      lastUpdated: 1439478405547,
-      items: [ 42, 100 ]
-    }
-  },
-  /*entities: {
-    users: {
-      2: {
-        id: 2,
-        name: 'Andrew'
-      }
-    },
-    posts: {
-      42: {
-        id: 42,
-        title: 'Confusion about Flux and Relay',
-        author: 2
-      },
-      100: {
-        id: 100,
-        title: 'Creating a Simple Application Using React JS and Flux Architecture',
-        author: 2
-      }
-    }
-  }*/
+  ]
 };
 
 let store = createStore(todoAppReducers, initialState);
@@ -59,3 +50,4 @@ ReactDOM.render(
   </Provider>,
   $('#body')[0]
 );
+*/

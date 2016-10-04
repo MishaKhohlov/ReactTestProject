@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch'
 /*
  * типы действий
  */
@@ -28,29 +29,31 @@ const VisibilityFilters = {
 /*
  * генераторы действий
  */
-function addTodo(text) {
-  return {
-    type: ADD_TODO,
-    text
-  }
-}
+/*function addTodo(text) {
+ return {
+ type: ADD_TODO,
+ text
+ }
+ }
 
-function toggleTodo(index) {
-  return { type: TOGGLE_TODO, index }
-}
+ function toggleTodo(index) {
+ return { type: TOGGLE_TODO, index }
+ }
 
-function setVisibilityFilter(filter) {
-  return { type: SET_VISIBILITY_FILTER, filter }
-}
+ function setVisibilityFilter(filter) {
+ return { type: SET_VISIBILITY_FILTER, filter }
+ }
 
-function setNewValueItem(id, val) {
-  return {type: CHANGE_TODO, id: id, value: val}
-}
+ function setNewValueItem(id, val) {
+ return {type: CHANGE_TODO, id: id, value: val}
+ }
+
+
+ function deleteItem(id) {
+ return {type: DELETE_ITEM, id: id}
+ }*/
 
 // async
-function deleteItem(id) {
-  return {type: DELETE_ITEM, id: id}
-}
 
 function selectSubreddit(subreddit) {
   return {type: SELECT_SUBREDDIT, subreddit}
@@ -73,12 +76,31 @@ function receivePosts(subreddit, json) {
   }
 }
 
+function fetchPosts(subreddit) {
+  return function (dispatch) {
+    dispatch(requestPosts(subreddit));
+    return fetch(`http://www.reddit.com/r/${subreddit}.json`)
+      .then(response => {
+        return response.json()
+      })
+      .then(json => {
+          dispatch(receivePosts(subreddit, json))
+        }
+      )
+  }
+}
+
 export {
-  addTodo,
-  toggleTodo,
-  setVisibilityFilter,
-  setNewValueItem,
-  deleteItem,
+  /*addTodo,
+   toggleTodo,
+   setVisibilityFilter,
+   setNewValueItem,
+   deleteItem,*/
+  selectSubreddit,
+  invalidateSubreddit,
+  requestPosts,
+  receivePosts,
+  fetchPosts,
   VisibilityFilters,
   ADD_TODO,
   TOGGLE_TODO,

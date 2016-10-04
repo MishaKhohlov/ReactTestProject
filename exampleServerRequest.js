@@ -1,4 +1,4 @@
-{
+var test = {
   selectedSubreddit: 'frontend',
   entities: {
     users: {
@@ -33,4 +33,4 @@
       items: [ 42, 100 ]
     }
   }
-}
+};
