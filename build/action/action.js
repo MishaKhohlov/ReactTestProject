@@ -82,7 +82,7 @@ function fetchPosts(subreddit) {
     return fetch(`${subreddit}.json`)
       .then(respond => respond.json())
       .then(json => {
-          setTimeout(() => dispatch(receivePosts(subreddit, json)), 2000)
+          setTimeout(() => dispatch(receivePosts(subreddit, json)), 4000)
         }
       )
   }
