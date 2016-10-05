@@ -54,9 +54,9 @@ class UserList extends React.Component {
 }
 
 UserList.propTypes = {
-  postsBySubreddit: React.PropTypes.objectOf(React.PropTypes.shape({
+  postsBySubreddit: React.PropTypes.shape({
     items: React.PropTypes.array.isRequired
-  }).isRequired).isRequired
+  }).isRequired
 };
 
 const mapStateToProps = (state) => {
