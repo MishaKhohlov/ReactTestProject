@@ -55,16 +55,16 @@ function deleteItem(id) {
 
 // async
 
-function selectSubreddit(subreddit) {
-  return {type: SELECT_SUBREDDIT, subreddit}
+function selectSubreddit() {
+  return {type: SELECT_SUBREDDIT}
 }
 
-function invalidateSubreddit(subreddit) {
-  return {type: INVALIDATE_SUBREDDIT, subreddit}
+function invalidateSubreddit() {
+  return {type: INVALIDATE_SUBREDDIT}
 }
 
-function requestPosts(subreddit) {
-  return {type: REQUEST_POSTS, subreddit}
+function requestPosts() {
+  return {type: REQUEST_POSTS}
 }
 
 function receivePosts(subreddit, json) {
@@ -82,7 +82,7 @@ function fetchPosts(subreddit) {
     return fetch(`${subreddit}.json`)
       .then(respond => respond.json())
       .then(json => {
-          dispatch(receivePosts(subreddit, json))
+          setTimeout(() => dispatch(receivePosts(subreddit, json)), 2000)
         }
       )
   }

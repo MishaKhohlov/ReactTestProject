@@ -50,7 +50,7 @@ class Todo extends React.Component {
   }
 
  deleteItem() {
-   this.props.deleteItem()
+   this.props.deleteItem(this.props.id)
  }
 
   render() {

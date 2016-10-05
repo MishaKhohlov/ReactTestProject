@@ -32,12 +32,14 @@ function posts(state = {
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return Object.assign({}, state, {
-        didInvalidate: true
+        didInvalidate: true,
+        items: []
       });
     case REQUEST_POSTS:
       return Object.assign({}, state, {
         isFetching: true,
-        didInvalidate: false
+        didInvalidate: false,
+        items: []
       });
     case RECEIVE_POSTS:
       return Object.assign({}, state, {
@@ -65,9 +67,7 @@ function postsBySubreddit(state = {}, action) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
-      return Object.assign({}, state, {
-        [action.subreddit]: posts(state[action.subreddit], action)
-      });
+      return Object.assign({}, posts(state, action));
     default:
       return state
   }

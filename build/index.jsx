@@ -23,13 +23,13 @@ const store = createStore(
   rootReducer,
   initialState,
   applyMiddleware(
-    thunkMiddleware, // lets us dispatch() functions
-    loggerMiddleware // neat middleware that logs actions
+    thunkMiddleware // lets us dispatch() functions
+    // loggerMiddleware // neat middleware that logs actions
   )
 );
 
-store.dispatch(fetchPosts('exampleServerData')).then(() =>
-  console.log(store.getState())
+store.dispatch(fetchPosts('exampleServerData')).then((data) => {}
+ // console.log(store.getState())
 );
 
 import App from './components/app/app.jsx'
