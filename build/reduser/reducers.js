@@ -27,12 +27,14 @@ function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
 function posts(state = {
   isFetching: false,
   didInvalidate: false,
+  error: '',
   items: []
 }, action) {
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return Object.assign({}, state, {
         didInvalidate: true,
+        error: action.error,
         items: []
       });
     case REQUEST_POSTS:

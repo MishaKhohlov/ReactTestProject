@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
+import {logger, timeoutScheduler} from './middleware/middleware'
 import {createStore, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
 import {VisibilityFilters, selectSubreddit, fetchPosts} from './action/action';
@@ -23,14 +24,31 @@ const store = createStore(
   rootReducer,
   initialState,
   applyMiddleware(
-    thunkMiddleware // lets us dispatch() functions
+    thunkMiddleware, // lets us dispatch() functions
+    timeoutScheduler, // timeuot in meta {delay: N}
+    // logger // my logs action
     // loggerMiddleware // neat middleware that logs actions
   )
 );
 
-store.dispatch(fetchPosts('exampleServerData')).then((data) => {}
- // console.log(store.getState())
+store.dispatch(fetchPosts('exampleServerData')).then((data) => {
+  }
+  // console.log(store.getState())
 );
+
+
+
+/*function applyMiddlewareMy(store, middlewares = [logger]) {
+ middlewares = middlewares.slice();
+ middlewares.reverse();
+
+ let dispatch = store.dispatch;
+ middlewares.forEach(middleware =>
+ dispatch = middleware(store)(dispatch)
+ );
+
+ return Object.assign({}, store, { dispatch })
+ }*/
 
 import App from './components/app/app.jsx'
 

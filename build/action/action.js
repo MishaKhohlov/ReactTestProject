@@ -59,8 +59,8 @@ function selectSubreddit() {
   return {type: SELECT_SUBREDDIT}
 }
 
-function invalidateSubreddit() {
-  return {type: INVALIDATE_SUBREDDIT}
+function invalidateSubreddit(error) {
+  return {type: INVALIDATE_SUBREDDIT, error}
 }
 
 function requestPosts() {
@@ -72,17 +72,24 @@ function receivePosts(subreddit, json) {
     type: RECEIVE_POSTS,
     subreddit,
     posts: json.user,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
+    meta: {delay: 4000}
   }
 }
 
-function fetchPosts(subreddit) {
+
+// Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
+// когда это действие достигает редюсера.
+  function fetchPosts(subreddit) {
   return function (dispatch) {
     dispatch(requestPosts(subreddit));
     return fetch(`${subreddit}.json`)
       .then(respond => respond.json())
       .then(json => {
-          setTimeout(() => dispatch(receivePosts(subreddit, json)), 4000)
+          dispatch(receivePosts(subreddit, json))
+        },
+        error => {
+          dispatch(invalidateSubreddit(error))
         }
       )
   }
