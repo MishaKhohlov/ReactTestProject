@@ -3,11 +3,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import {logger, timeoutScheduler} from './middleware/middleware'
 import {createStore, applyMiddleware} from 'redux';
 import {Provider, connect} from 'react-redux';
 import {VisibilityFilters, selectSubreddit, fetchPosts} from './action/action';
 import {rootReducer} from './reduser/reducers';
+
+// Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
+// когда это действие достигает редюсера.
+import {logger, timeoutScheduler, readyStatePromise} from './middleware/middleware'
 
 // funny logs
 const loggerMiddleware = createLogger();
@@ -26,6 +29,7 @@ const store = createStore(
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeuot in meta {delay: N}
+    readyStatePromise // promises
     // logger // my logs action
     // loggerMiddleware // neat middleware that logs actions
   )

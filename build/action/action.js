@@ -32,7 +32,14 @@ const VisibilityFilters = {
 function addTodo(text) {
   return {
     type: ADD_TODO,
-    text
+    text,
+    promise: () => {
+      return new Promise(function (resolve, reject) {
+        setTimeout(() => {
+          resolve('Prooomise')
+        }, 2000)
+      });
+    }
   }
 }
 
@@ -77,10 +84,7 @@ function receivePosts(subreddit, json) {
   }
 }
 
-
-// Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
-// когда это действие достигает редюсера.
-  function fetchPosts(subreddit) {
+function fetchPosts(subreddit) {
   return function (dispatch) {
     dispatch(requestPosts(subreddit));
     return fetch(`${subreddit}.json`)

@@ -21,7 +21,25 @@ const timeoutScheduler = store => next => action => {
   }
 };
 
+const readyStatePromise = store => next => action => {
+  if (!action.promise) {
+    return next(action)
+  }
+
+  function makeAction(done, data) {
+    let newAction = Object.assign({}, action, {done}, data);
+    delete newAction.promise;
+    return newAction
+  }
+
+  return action.promise().then(
+    result => next(makeAction(true, {result})),
+    error => next(makeAction(false, {error}))
+  )
+};
+
 export {
   logger,
-  timeoutScheduler
+  timeoutScheduler,
+  readyStatePromise
 }
