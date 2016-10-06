@@ -1,8 +1,5 @@
 import React from 'react';
-import AddTodo from '../addTodo/addTodo.jsx';
-import VisibleTodoList from '../visibleTodoList/visibleTodoList.jsx';
-import UserListConnect from '../userList/userList.jsx';
-import FilterLink from '../filterLink/filterLink.jsx';
+import {Link} from 'react-router'
 
 // Start App
 class App extends React.Component {
@@ -10,13 +7,16 @@ class App extends React.Component {
     return (
       <div>
         <h2>My test app with React and Redux</h2>
-        <AddTodo/>
-        <VisibleTodoList/>
-        <FilterLink/>
-        <UserListConnect/>
+        <ul>
+          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/add'>Add</Link></li>
+        </ul>
+        {this.props.children}
       </div>
     );
   }
 }
 
 export default App;
+
+

@@ -12,6 +12,7 @@
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-redux": "latest",
+    "react-router": "^2.8.1",
     "redux": "latest",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0"

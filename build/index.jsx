@@ -4,9 +4,13 @@ import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import {createStore, applyMiddleware} from 'redux';
-import {Provider, connect} from 'react-redux';
-import {VisibilityFilters, selectSubreddit, fetchPosts} from './action/action';
+import {Provider} from 'react-redux';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import {VisibilityFilters, fetchPosts} from './action/action';
 import {rootReducer} from './reduser/reducers';
+
+import UserListConnect from './components/userList/userList.jsx';
+import AddTodoHome from './components/addTodoPage/addTodoPage.jsx';
 
 // Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
 // когда это действие достигает редюсера.
@@ -29,22 +33,27 @@ const store = createStore(
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeuot in meta {delay: N}
-    readyStatePromise // promises
-    // logger // my logs action
+    readyStatePromise, // promises
+    logger // my logs action
     // loggerMiddleware // neat middleware that logs actions
   )
 );
 
 store.dispatch(fetchPosts('exampleServerData')).then((data) => {
-  }
   // console.log(store.getState())
+  }
 );
 
 import App from './components/app/app.jsx'
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={browserHistory}>
+      <Route path='/' component={App}>
+        <IndexRoute component={UserListConnect} />
+        <Route path='add' components={AddTodoHome}/>
+      </Route>
+    </Router>
   </Provider>,
   $('#body')[0]
 );
