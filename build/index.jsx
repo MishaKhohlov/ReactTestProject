@@ -5,7 +5,15 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router'
+import {
+  Router,
+  Route,
+  Redirect,
+  IndexRedirect,
+  IndexRoute,
+  browserHistory,
+  hashHistory
+} from 'react-router'
 import {VisibilityFilters, fetchPosts} from './action/action';
 import {rootReducer} from './reduser/reducers';
 
@@ -42,7 +50,7 @@ const store = createStore(
 );
 
 store.dispatch(fetchPosts('exampleServerData')).then((data) => {
-  // console.log(store.getState())
+    // console.log(store.getState())
   }
 );
 
@@ -51,17 +59,21 @@ import App from './components/app/app.jsx'
 // history={hashHistory} work with browser sync
 // history={browserHistory} wotk on server
 
+const routes = (
+  <div>
+    <Route path='/' component={App}>
+      <IndexRoute component={UserListConnect}/>
+      <Route path='add' components={AddTodoHome}>
+        <Route path='banlist/:data' component={BanList}/>
+      </Route>
+    </Route>
+    <Route path='*' component={NotFound}/>
+  </div>
+);
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path='/' component={App}>
-        <IndexRoute component={UserListConnect} />
-        <Route path='add' components={AddTodoHome}>
-          <Route path='banlist/:data' component={BanList} />
-        </Route>
-      </Route>
-      <Route path='*' component={NotFound} />
-    </Router>
+    <Router history={hashHistory} routes={routes}/>
   </Provider>,
   $('#body')[0]
 );

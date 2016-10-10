@@ -9,7 +9,7 @@ class BanList extends React.Component {
       template = (
         <div>
           <h4>Dynamic Route</h4>
-          <p>our data - {this.props.params.data}</p>
+          <p>our data - {this.props.params.data.replace(/-/g,' ')}</p>
         </div>
       )
     } else {
