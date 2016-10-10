@@ -8,8 +8,9 @@ class App extends React.Component {
       <div>
         <h2>My test app with React and Redux</h2>
         <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/add'>Add</Link></li>
+          <li><Link activeClassName='load-data' onlyActiveOnIndex={true} to='/'>Home</Link></li>
+          <li><Link activeClassName='load-data' onlyActiveOnIndex={true} to='/add'>Add</Link></li>
+          <li><Link activeClassName='load-data' to='/add/banlist'>Banlist</Link></li>
         </ul>
         {this.props.children}
       </div>

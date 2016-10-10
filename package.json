@@ -4,7 +4,8 @@
   "description": "React RU tutorial",
   "main": "index.html",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "server": "node bin/server.js"
   },
   "dependencies": {
     "jquery": "latest",

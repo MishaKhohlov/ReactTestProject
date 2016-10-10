@@ -5,12 +5,14 @@ import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router'
 import {VisibilityFilters, fetchPosts} from './action/action';
 import {rootReducer} from './reduser/reducers';
 
 import UserListConnect from './components/userList/userList.jsx';
 import AddTodoHome from './components/addTodoPage/addTodoPage.jsx';
+import BanList from './components/banList/banList.jsx';
+import NotFound from './components/notFound/notFound.jsx';
 
 // Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
 // когда это действие достигает редюсера.
@@ -46,13 +48,19 @@ store.dispatch(fetchPosts('exampleServerData')).then((data) => {
 
 import App from './components/app/app.jsx'
 
+// history={hashHistory} work with browser sync
+// history={browserHistory} wotk on server
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory}>
+    <Router history={hashHistory}>
       <Route path='/' component={App}>
         <IndexRoute component={UserListConnect} />
-        <Route path='add' components={AddTodoHome}/>
+        <Route path='add' components={AddTodoHome}>
+          <Route path='banlist' component={BanList} />
+        </Route>
       </Route>
+      <Route path='*' component={NotFound} />
     </Router>
   </Provider>,
   $('#body')[0]

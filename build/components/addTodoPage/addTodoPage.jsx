@@ -8,6 +8,7 @@ class AddTodoPage extends React.Component {
   render() {
     return (
       <div>
+        {this.props.children}
         <AddTodo/>
         <VisibleTodoList/>
         <FilterLink/>
