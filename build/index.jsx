@@ -57,7 +57,7 @@ ReactDOM.render(
       <Route path='/' component={App}>
         <IndexRoute component={UserListConnect} />
         <Route path='add' components={AddTodoHome}>
-          <Route path='banlist' component={BanList} />
+          <Route path='banlist/:data' component={BanList} />
         </Route>
       </Route>
       <Route path='*' component={NotFound} />

@@ -10,7 +10,7 @@ class App extends React.Component {
         <ul>
           <li><Link activeClassName='load-data' onlyActiveOnIndex={true} to='/'>Home</Link></li>
           <li><Link activeClassName='load-data' onlyActiveOnIndex={true} to='/add'>Add</Link></li>
-          <li><Link activeClassName='load-data' to='/add/banlist'>Banlist</Link></li>
+          <li><Link activeClassName='load-data' to='/add/banlist/testData'>Banlist</Link></li>
         </ul>
         {this.props.children}
       </div>
