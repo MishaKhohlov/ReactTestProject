@@ -21,6 +21,7 @@ import UserListConnect from './components/userList/userList.jsx';
 import AddTodoHome from './components/addTodoPage/addTodoPage.jsx';
 import BanList from './components/banList/banList.jsx';
 import NotFound from './components/notFound/notFound.jsx';
+import Login from './components/login/login'
 
 // Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
 // когда это действие достигает редюсера.
@@ -44,7 +45,7 @@ const store = createStore(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeuot in meta {delay: N}
     readyStatePromise, // promises
-    logger // my logs action
+    // logger // my logs action
     // loggerMiddleware // neat middleware that logs actions
   )
 );
@@ -56,14 +57,21 @@ store.dispatch(fetchPosts('exampleServerData')).then((data) => {
 
 import App from './components/app/app.jsx'
 
-// history={hashHistory} work with browser sync
-// history={browserHistory} wotk on server
+// hashHistory - work with browser sync
+// browserHistory - work on server
+
+
+
 
 const routes = (
   <div>
     <Route path='/' component={App}>
       <IndexRoute component={UserListConnect}/>
-      <Route path='add' components={AddTodoHome}>
+      <Route path='/login' component={Login}/>
+      <Route path='add' components={AddTodoHome}
+             onEnter={Login.checkLogin}
+             onChange={Login.change}
+             onLeave={Login.leave}>
         <Route path='banlist/:data' component={BanList}/>
       </Route>
     </Route>
