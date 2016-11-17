@@ -1,0 +1,22 @@
+{
+  "user": [
+    {
+      "name": "Misha",
+      "secondName": "Khohlov",
+      "age": "19",
+      "text": "Hello async action in React with Redux"
+    },
+    {
+      "name": "Vlad",
+      "secondName": "Degterev",
+      "age": "20",
+      "text": "thunkMiddleware add dispatch function on store"
+    },
+    {
+      "name": "Andrew",
+      "secondName": "Test",
+      "age": "21",
+      "text": "loggerMiddleware is cool log server request"
+    }
+  ]
+}

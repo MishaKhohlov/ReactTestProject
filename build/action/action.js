@@ -37,7 +37,7 @@ function addTodo(text) {
       return new Promise(function (resolve, reject) {
         setTimeout(() => {
           resolve('Prooomise')
-        }, 2000)
+        }, 1000)
       });
     }
   }
@@ -80,7 +80,7 @@ function receivePosts(subreddit, json) {
     subreddit,
     posts: json.user,
     receivedAt: Date.now(),
-    meta: {delay: 4000}
+    meta: {delay: 1000}
   }
 }
 

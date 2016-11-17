@@ -12,7 +12,7 @@ class Login extends Component {
   }
 
   routerWillLeave(ev) {
-    console.log(ev);
+    // console.log(ev);
     if (!this.state.pathname) {
       this.setState({
         pathname: ev.pathname
