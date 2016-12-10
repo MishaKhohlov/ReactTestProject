@@ -9,8 +9,29 @@ import {
   INVALIDATE_SUBREDDIT,
   REQUEST_POSTS,
   RECEIVE_POSTS,
-  VisibilityFilters
+  VisibilityFilters,
+  LOGIN_REQUEST,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCES
 } from './../action/action';
+
+const initialLocalStotage = window.localStorage.getItem('auth_login') || '';
+
+function userState(state = initialLocalStotage, action) {
+  switch(action.type) {
+    case LOGIN_REQUEST:
+      return {};
+    case LOGIN_FAIL:
+      return {};
+    case LOGIN_SUCCESS:
+      return Object.assign({}, action.payload);
+    case LOGOUT_SUCCES:
+      return {};
+    default:
+      return state
+  }
+}
 
 // default value important without init state
 function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
@@ -21,7 +42,6 @@ function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
       return state
   }
 }
-
 
 // slice reducer on small parts
 function posts(state = {
@@ -112,7 +132,8 @@ function todos(state = [], action) {
 const rootReducer = combineReducers({
   visibilityFilter,
   todos,
-  postsBySubreddit
+  postsBySubreddit,
+  userState
 });
 
 

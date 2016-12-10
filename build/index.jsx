@@ -35,7 +35,11 @@ const initialState = {
   todos: [
     {text: 'Name1', completed: false},
     {text: 'Name2', completed: false}
-  ]
+  ],
+  userState: {
+    name: '',
+    isAuthenticated: false
+  }
 };
 
 const store = createStore(
@@ -43,9 +47,9 @@ const store = createStore(
   initialState,
   applyMiddleware(
     thunkMiddleware, // lets us dispatch() functions
-    timeoutScheduler, // timeuot in meta {delay: N}
+    timeoutScheduler, // timeout in meta {delay: N}
     readyStatePromise, // promises
-    // logger // my logs action
+    logger // my logs action
     // loggerMiddleware // neat middleware that logs actions
   )
 );
@@ -59,8 +63,6 @@ import App from './components/app/app.jsx'
 
 // hashHistory - work with browser sync
 // browserHistory - work on server
-
-
 
 
 const routes = (

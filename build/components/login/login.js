@@ -1,6 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import * as Action from '../../action/action';
+import { bindActionCreators } from 'redux'
+import {connect} from 'react-redux';
 
-class Login extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
@@ -42,10 +45,17 @@ class Login extends Component {
 
   handleSubmit(ev) {
     ev.preventDefault();
+
     const value = ev.target.elements[0].value.trim();
     if (value.length > 3) {
-      window.localStorage.setItem('auth_login', value);
-      this.context.router.push('/add')
+      // similar on this.props.dispatch
+      bindActionCreators(Action, this.props.dispatch).login({
+        name: 'Misha',
+        value
+      });
+
+      // window.localStorage.setItem('auth_login', value);
+      // this.context.router.push('/add')
     }
   }
 
@@ -84,8 +94,10 @@ class Login extends Component {
   }
 }
 
-Login.contextTypes = {
+LoginPage.contextTypes = {
   router: PropTypes.object.isRequired
 };
+
+const Login = connect()(LoginPage);
 
 export default Login;

@@ -15,6 +15,12 @@ const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT';
 const REQUEST_POSTS = 'REQUEST_POSTS';
 
 
+// route
+const LOGIN_REQUEST = 'LOGIN_REQUEST';
+const LOGIN_FAIL = 'LOGIN_FAIL';
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+const LOGOUT_SUCCES = 'LOGOUT_SUCCESS';
+
 /*
  * другие константы
  */
@@ -55,10 +61,10 @@ function setNewValueItem(id, val) {
   return {type: CHANGE_TODO, id: id, value: val}
 }
 
-
 function deleteItem(id) {
   return {type: DELETE_ITEM, id: id}
 }
+
 
 // async
 
@@ -85,7 +91,7 @@ function receivePosts(subreddit, json) {
 }
 
 function fetchPosts(subreddit) {
-  return function (dispatch) {
+  return (dispatch) => {
     dispatch(requestPosts(subreddit));
     return fetch(`${subreddit}.json`)
       .then(respond => respond.json())
@@ -96,6 +102,32 @@ function fetchPosts(subreddit) {
           dispatch(invalidateSubreddit(error))
         }
       )
+  }
+}
+
+function login(payload) {
+  console.log(payload);
+  // to_do
+  return (dispatch) => {
+
+    dispatch({type: LOGIN_REQUEST});
+
+    setTimeout(() => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: {
+          name: payload.name,
+          isAuthenticated: true
+        }
+      })
+    }, 1500);
+  }
+}
+
+function logout(payload) {
+  // to_do
+  return {
+    type: LOGOUT_SUCCES
   }
 }
 
@@ -110,6 +142,7 @@ export {
   requestPosts,
   receivePosts,
   fetchPosts,
+  login,
   VisibilityFilters,
   ADD_TODO,
   TOGGLE_TODO,
@@ -119,5 +152,9 @@ export {
   SELECT_SUBREDDIT,
   INVALIDATE_SUBREDDIT,
   REQUEST_POSTS,
-  RECEIVE_POSTS
+  RECEIVE_POSTS,
+  LOGIN_REQUEST,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCES
 };
