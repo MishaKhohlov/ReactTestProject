@@ -21,7 +21,8 @@ import UserListConnect from './components/userList/userList.jsx';
 import AddTodoHome from './components/addTodoPage/addTodoPage.jsx';
 import BanList from './components/banList/banList.jsx';
 import NotFound from './components/notFound/notFound.jsx';
-import Login from './components/login/login'
+import Login from './components/login/login.jsx'
+import requireAuthConnect from './components/requireAuth/requireAuth.jsx'
 
 // Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
 // когда это действие достигает редюсера.
@@ -76,10 +77,7 @@ const routes = (
     <Route path='/' component={App}>
       <IndexRoute component={UserListConnect}/>
       <Route path='/login' component={Login}/>
-      <Route path='add' components={AddTodoHome}
-             onEnter={Login.checkLogin}
-             onChange={Login.change}
-             onLeave={Login.leave}>
+      <Route path='add' components={requireAuthConnect} childComponent={AddTodoHome}>
         <Route path='banlist/:data' component={BanList}/>
       </Route>
     </Route>

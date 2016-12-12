@@ -2,13 +2,7 @@ import React from 'react';
 import Link from '../link/link.jsx';
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  render() {
+ render() {
     return (
       <footer>
         <ul>

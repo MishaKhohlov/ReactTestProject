@@ -16,7 +16,7 @@ import {
   LOGOUT_SUCCES
 } from './../action/action';
 
-const initialLocalStotage = window.localStorage.getItem('auth_login') || '';
+const initialLocalStotage = {isAuthenticated: window.localStorage.getItem('auth_login')} ;
 
 function userState(state = initialLocalStotage, action) {
   switch(action.type) {
@@ -27,7 +27,7 @@ function userState(state = initialLocalStotage, action) {
     case LOGIN_SUCCESS:
       return Object.assign({}, action.payload);
     case LOGOUT_SUCCES:
-      return {};
+      return Object.assign({}, action.payload);
     default:
       return state
   }

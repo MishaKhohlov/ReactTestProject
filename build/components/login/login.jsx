@@ -15,7 +15,6 @@ class LoginPage extends Component {
   }
 
   routerWillLeave(ev) {
-    console.log(ev);
     if(ev.pathname !== '/add') {
       if (!this.state.pathname) {
         this.setState({
@@ -64,8 +63,12 @@ class LoginPage extends Component {
     bindActionCreators(Action, this.props.dispatch).logout({})
   }
 
+  static checkLogin() {
+
+  }
+
   static change(prevState, nextState, replace, callback) {
-    callback()
+   //  console.log(prevState, nextState, replace, callback);
   }
 
   render() {

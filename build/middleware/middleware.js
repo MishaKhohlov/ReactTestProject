@@ -71,6 +71,8 @@ const logout = store => next => action => {
 
   hashHistory.replace('/');
   window.localStorage.removeItem('auth_login');
+
+  return next(action)
 };
 
 
