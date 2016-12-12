@@ -1,3 +1,6 @@
+import * as Action from '../action/action';
+import {hashHistory} from 'react-router'
+
 // example middleware
 const logger = store => next => action => {
   console.log('dispatching', action);
@@ -21,6 +24,7 @@ const timeoutScheduler = store => next => action => {
   }
 };
 
+
 const readyStatePromise = store => next => action => {
   if (!action.promise) {
     return next(action)
@@ -38,8 +42,44 @@ const readyStatePromise = store => next => action => {
   )
 };
 
+const authUser = store => next => action => {
+  if(!action.password || action.type !== Action.LOGIN_REQUEST) {
+    return next(action)
+  }
+  window.localStorage.setItem('auth_login', action.password);
+};
+
+const loginSuccess = store => next => action => {
+  if(action.type !== Action.LOGIN_SUCCESS) {
+    return next(action)
+  }
+
+  if(!action.payload.isAuthenticated) {
+    window.localStorage.removeItem('auth_login');
+    hashHistory.replace('/');
+  } else {
+    hashHistory.push('/add');
+  }
+
+  return next(action)
+};
+
+const logout = store => next => action => {
+  if(action.type !== Action.LOGOUT_SUCCES) {
+    return next(action)
+  }
+
+  hashHistory.replace('/');
+  window.localStorage.removeItem('auth_login');
+};
+
+
+
 export {
   logger,
   timeoutScheduler,
-  readyStatePromise
+  readyStatePromise,
+  authUser,
+  loginSuccess,
+  logout
 }

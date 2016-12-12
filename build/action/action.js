@@ -106,28 +106,37 @@ function fetchPosts(subreddit) {
 }
 
 function login(payload) {
-  console.log(payload);
   // to_do
   return (dispatch) => {
 
-    dispatch({type: LOGIN_REQUEST});
+    dispatch({type: LOGIN_REQUEST, password: payload.value});
 
     setTimeout(() => {
+
+      // example verification on server side
+      const serverResponse = payload.value.length === 4;
+
       dispatch({
         type: LOGIN_SUCCESS,
         payload: {
           name: payload.name,
-          isAuthenticated: true
+          isAuthenticated: serverResponse,
+          password: payload.value
         }
       })
     }, 1500);
   }
 }
 
-function logout(payload) {
+function logout() {
   // to_do
-  return {
-    type: LOGOUT_SUCCES
+  return (dispatch) => {
+    dispatch({
+      type: LOGOUT_SUCCES,
+      payload: {
+        isAuthenticated: false,
+      }
+    })
   }
 }
 
@@ -143,6 +152,7 @@ export {
   receivePosts,
   fetchPosts,
   login,
+  logout,
   VisibilityFilters,
   ADD_TODO,
   TOGGLE_TODO,

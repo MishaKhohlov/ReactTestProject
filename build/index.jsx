@@ -25,7 +25,14 @@ import Login from './components/login/login'
 
 // Redux мидлвэры Они предоставляют стороннюю точку расширения между отправкой действия и моментом,
 // когда это действие достигает редюсера.
-import {logger, timeoutScheduler, readyStatePromise} from './middleware/middleware'
+import {
+  logger,
+  timeoutScheduler,
+  readyStatePromise,
+  authUser,
+  loginSuccess,
+  logout
+} from './middleware/middleware'
 
 // funny logs
 const loggerMiddleware = createLogger();
@@ -35,11 +42,7 @@ const initialState = {
   todos: [
     {text: 'Name1', completed: false},
     {text: 'Name2', completed: false}
-  ],
-  userState: {
-    name: '',
-    isAuthenticated: false
-  }
+  ]
 };
 
 const store = createStore(
@@ -49,7 +52,10 @@ const store = createStore(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeout in meta {delay: N}
     readyStatePromise, // promises
-    logger // my logs action
+    //logger, // my logs action
+    authUser, // auth user
+    loginSuccess,
+    logout
     // loggerMiddleware // neat middleware that logs actions
   )
 );

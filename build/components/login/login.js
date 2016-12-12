@@ -15,18 +15,22 @@ class LoginPage extends Component {
   }
 
   routerWillLeave(ev) {
-    // console.log(ev);
-    if (!this.state.pathname) {
-      this.setState({
-        pathname: ev.pathname
-      });
-      return false
-    } else {
-      this.setState({
-        pathname: false
-      });
-      return true
+    console.log(ev);
+    if(ev.pathname !== '/add') {
+      if (!this.state.pathname) {
+        this.setState({
+          pathname: ev.pathname
+        });
+        return false
+      } else {
+        this.setState({
+          pathname: false
+        });
+        return true
+      }
     }
+
+    return true
   }
 
   willLeave(ev) {
@@ -53,27 +57,15 @@ class LoginPage extends Component {
         name: 'Misha',
         value
       });
-
-      // window.localStorage.setItem('auth_login', value);
-      // this.context.router.push('/add')
     }
   }
 
-  static checkLogin(nextState, replace, callback) {
-    const login = window.localStorage.getItem('auth_login');
-    if (login === 'hello') {
-      setTimeout(callback, 1000);
-      console.log('пропусти');
-    } else {
-      replace('/');
-    }
+  logout() {
+    bindActionCreators(Action, this.props.dispatch).logout({})
   }
 
   static change(prevState, nextState, replace, callback) {
     callback()
-  }
-
-  static leave(prevState) {
   }
 
   render() {
@@ -84,6 +76,7 @@ class LoginPage extends Component {
           <input type='text' placeholder='login'/>
           <button type='submit'>Войти</button>
         </form>
+        <button onClick={this.logout.bind(this)}>Logout</button>
         <div className={this.state.pathname ? '' : 'hide'}>
           <h5>Are you sure?</h5>
           <button onClick={this.willLeave.bind(this, true)}>Yes</button>
