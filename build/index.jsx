@@ -32,7 +32,8 @@ import {
   readyStatePromise,
   authUser,
   loginSuccess,
-  logout
+  logout,
+  router
 } from './middleware/middleware'
 
 // funny logs
@@ -53,10 +54,11 @@ const store = createStore(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeout in meta {delay: N}
     readyStatePromise, // promises
-    //logger, // my logs action
+    logger, // my logs action
     authUser, // auth user
     loginSuccess,
-    logout
+    logout,
+    router
     // loggerMiddleware // neat middleware that logs actions
   )
 );

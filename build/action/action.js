@@ -20,6 +20,7 @@ const LOGIN_REQUEST = 'LOGIN_REQUEST';
 const LOGIN_FAIL = 'LOGIN_FAIL';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGOUT_SUCCES = 'LOGOUT_SUCCESS';
+const ROUTING = 'ROUTING';
 
 /*
  * другие константы
@@ -140,6 +141,14 @@ function logout() {
   }
 }
 
+function redirect(params) {
+  return {
+    type: ROUTING,
+    method: params.method,
+    url: params.url
+  }
+}
+
 export {
   addTodo,
   toggleTodo,
@@ -153,6 +162,7 @@ export {
   fetchPosts,
   login,
   logout,
+  redirect,
   VisibilityFilters,
   ADD_TODO,
   TOGGLE_TODO,
@@ -166,5 +176,6 @@ export {
   LOGIN_REQUEST,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
-  LOGOUT_SUCCES
+  LOGOUT_SUCCES,
+  ROUTING
 };

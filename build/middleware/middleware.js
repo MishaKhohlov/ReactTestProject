@@ -75,6 +75,13 @@ const logout = store => next => action => {
   return next(action)
 };
 
+const router = store => next => action => {
+  if(action.type !== Action.ROUTING) {
+    return next(action)
+  }
+
+  hashHistory[action.method](action.url)
+};
 
 
 export {
@@ -83,5 +90,6 @@ export {
   readyStatePromise,
   authUser,
   loginSuccess,
-  logout
+  logout,
+  router
 }
