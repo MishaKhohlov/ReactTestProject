@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import * as Action from '../../action/action';
 
 class requireAuth extends React.Component {
+  constructor(props) {
+    super(props);
+
+  }
 
   componentWillMount() {
     this.checkAuth(this.props.user)
@@ -43,4 +47,5 @@ function mapStateToProps(state) {
 
 const requireAuthConnect = connect(mapStateToProps)(requireAuth);
 
-export default requireAuthConnect;
+module.export = requireAuthConnect;
+// export default requireAuthConnect;

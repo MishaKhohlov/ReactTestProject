@@ -3,6 +3,9 @@ import {Link} from 'react-router'
 // import { hashHistory } from 'react-router'
 
 class NotFound extends React.Component {
+  constructor() {
+    super()
+  }
   goTo(e) {
     e.preventDefault();
     const value = 'test data from not found page';

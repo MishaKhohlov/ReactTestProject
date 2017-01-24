@@ -21,6 +21,7 @@ class App extends React.Component {
         <ul>
           <li><Link {...prop} onlyActiveOnIndex={true} to='/'>Home</Link></li>
           <li><Link {...prop} to='/add'>Add</Link></li>
+          <li><Link {...prop} to='/async'>Async</Link></li>
           <li><Link {...prop} to='/add/banlist/testData'>Banlist</Link></li>
           <li><Link {...prop} to='/login'>login</Link></li>
         </ul>

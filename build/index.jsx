@@ -17,6 +17,7 @@ import {
 import {VisibilityFilters, fetchPosts} from './action/action';
 import {rootReducer} from './reduser/reducers';
 
+import App from './components/app/app.jsx';
 import UserListConnect from './components/userList/userList.jsx';
 import AddTodoHome from './components/addTodoPage/addTodoPage.jsx';
 import BanList from './components/banList/banList.jsx';
@@ -54,7 +55,7 @@ const store = createStore(
     thunkMiddleware, // lets us dispatch() functions
     timeoutScheduler, // timeout in meta {delay: N}
     readyStatePromise, // promises
-    logger, // my logs action
+    // logger, // my logs action
     authUser, // auth user
     loginSuccess,
     logout,
@@ -68,17 +69,20 @@ store.dispatch(fetchPosts('exampleServerData')).then((data) => {
   }
 );
 
-import App from './components/app/app.jsx'
+
 
 // hashHistory - work with browser sync
 // browserHistory - work on server
 
+import async from './components/asyncComponent.jsx'
 
+// component={Login}
 const routes = (
   <div>
     <Route path='/' component={App}>
       <IndexRoute component={UserListConnect}/>
       <Route path='/login' component={Login}/>
+      <Route path='/async' component={async}/>
       <Route path='add' components={requireAuthConnect} childComponent={AddTodoHome}>
         <Route path='banlist/:data' component={BanList}/>
       </Route>

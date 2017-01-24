@@ -1,6 +1,8 @@
 module.exports = {
   entry: './build/index.jsx',
-  output: { path: __dirname, filename: 'app.min.js' },
+  output: { path: __dirname + '/js', filename: 'app.min.js', publicPath: '/js/' },
+  path: __dirname + '/js',
+  publicPath: 'js/',
   devtool: 'source-map',
   module: {
     loaders: [

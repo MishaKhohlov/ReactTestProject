@@ -26,6 +26,7 @@
     "babel-preset-es2017": "^6.16.0",
     "babel-preset-react": "latest",
     "browser-sync": "latest",
+    "bundle-loader": "^0.5.4",
     "gulp": "latest",
     "gulp-concat": "latest",
     "gulp-sourcemaps": "latest",
