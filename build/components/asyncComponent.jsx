@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-// import Async from './asyncTest.jsx';
 
 class async extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class async extends Component {
   componentDidMount() {
     let loginAsync;
     require.ensure([], (require) => {
-      loginAsync = require('./asyncTest.jsx');
+      loginAsync = require('./' + this.props.route.page + '.jsx');
       this.setState({ loginAsync });
     });
   }

@@ -76,13 +76,12 @@ store.dispatch(fetchPosts('exampleServerData')).then((data) => {
 
 import async from './components/asyncComponent.jsx'
 
-// component={Login}
 const routes = (
   <div>
     <Route path='/' component={App}>
       <IndexRoute component={UserListConnect}/>
       <Route path='/login' component={Login}/>
-      <Route path='/async' component={async}/>
+      <Route path='/async' component={async} page={'asyncTest'}/>
       <Route path='add' components={requireAuthConnect} childComponent={AddTodoHome}>
         <Route path='banlist/:data' component={BanList}/>
       </Route>
